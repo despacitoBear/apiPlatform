@@ -12,7 +12,7 @@ if (!$con) {
 $stringUser = strval($_REQUEST['user']);
 $stringPassword = strval($_REQUEST['password']);
 $stringEmail = strval($_REQUEST['email']);
-$registrationMysqlRequest = "INSERT INTO authentification (user,password, email) VALUES ($stringUser,$stringPassword,$stringEmail))";
-$result = mysqli_query($con, $sqlSecurityRequest);
+$registrationMysqlRequest = "INSERT INTO authentification (`user`, `password`, `email`) VALUES ($stringUser,$stringPassword,$stringEmail))";
+$result = mysqli_query($con, $registrationMysqlRequest);
 echo $result;
 mysqli_close($con);

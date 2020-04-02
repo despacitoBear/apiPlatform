@@ -1,4 +1,5 @@
 <?php
+function get_data(){
 $connection = mysqli_connect ('37.140.192.226','u0906702_default','86y2__LB', 'u0906702_default');
 if (!$connection) {
     echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
@@ -11,20 +12,28 @@ if (!$connection) {
         array("errorDescription",strval(mysqli_connect_error()))
     );
     echo json_encode($errorArray);
+
 }
-$sqlWeatherRequest = "SELECT * FROM WeatherStatistics";
+$sqlWeatherRequest = "SELECT * FROM temperatureData";
 $result = mysqli_query($connection, $sqlWeatherRequest);
 $rowCount = mysqli_num_rows($result); // количество строк
-if ($result){   
-    $resultArray = array();
-    $tempArray = array();
-    while($row = $result->fetch_object())
+$resultArray = array();
+    while($row = mysqli_fetch_array($result))
     {
-        $tempArray = $row;
-        array_push($resultArray, $tempArray);
+        $resultArray[] = array(
+            'id' => $row["id"],
+            'celcius' => $row["celcius"],
+            'humidity' => $row["humidity"],
+            'date' => $row["dateTd"]
+        );
     }
+return json_encode($resultArray);
 }
-$numOfRowsArray = array('rows'=> $rowCount);
-$resultArray = array_merge($resultArray,$numOfRowsArray);// совмещаем массивы с количеством строк
-echo json_encode($resultArray);
-mysqli_close($connection);
+echo '<pre>';
+print_r(get_data());
+echo '</pre>';
+$file_name = date('d-m-Y').'.json';
+if(file_put_contents($file_name,get_data())){
+    echo $file_name.' was created';
+} else { echo "An error occured";}
+?>
