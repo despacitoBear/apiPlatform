@@ -27,13 +27,8 @@ $resultArray = array();
             'date' => $row["dateTd"]
         );
     }
+header('Content-type: application/json');
+echo json_encode($resultArray);
 return json_encode($resultArray);
 }
-echo '<pre>';
-print_r(get_data());
-echo '</pre>';
-$file_name = date('d-m-Y').'.json';
-if(file_put_contents($file_name,get_data())){
-    echo $file_name.' was created';
-} else { echo "An error occured";}
 ?>

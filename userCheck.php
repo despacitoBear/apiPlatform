@@ -32,9 +32,11 @@ if ($result){
 //если кол-во эл в мас = 0, то такой строки нет и входа тоже нет
     if(count($resultArray) == 0){
         $array = array('access'=> 0);
+        header('Content-type: application/json');
         echo json_encode($array);
     } else {
         $array = array('access'=> 1);
+        header('Content-type: application/json');
         echo json_encode($array);
     }
 
