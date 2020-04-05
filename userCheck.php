@@ -1,6 +1,6 @@
 <?php
-$_REQUEST['user'];//переменная для хранения имени пользователя в хэше
-$_REQUEST['pass'];//переменная для хранения пароля в хэшее
+$user = $_REQUEST['user'];//переменная для хранения имени пользователя в хэше
+$pass = $_REQUEST['pass'];//переменная для хранения пароля в хэше
 $con = mysqli_connect('37.140.192.226','u0906702_default','86y2__LB', 'u0906702_default');
 //проверяем коннект
 if (!$con) {
@@ -15,9 +15,7 @@ if (!$con) {
     );
     echo json_encode($errorArray);
 }
-$stringUsr = strval($_REQUEST['user']);
-$stringPassword = strval($_REQUEST['pass']);
-$sqlSecurityRequest = "SELECT * FROM authentification WHERE user = '$stringUsr' && password = '$stringPassword'";
+$sqlSecurityRequest = "SELECT * FROM authentification WHERE user = '$user' && password = '$pass'";
 $result = mysqli_query($con, $sqlSecurityRequest);
 if ($result){
     $resultArray = array();
@@ -27,7 +25,6 @@ if ($result){
         $tempArray = $row;
         array_push($resultArray, $tempArray);
     }
-    echo "               ";
 // access - int
 //если кол-во эл в мас = 0, то такой строки нет и входа тоже нет
     if(count($resultArray) == 0){
